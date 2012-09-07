@@ -51,11 +51,13 @@ private:
 	void CatPictureApp::blur(uint8_t* dataArray);
 	void CatPictureApp::horizontalLine(uint8_t* dataArray, int row, int col, int width);
 	//deque used to monitor x,y coordinate clicks
+	// Lucy:"This is really a great way I have never seen!"
 	deque<int> tints;
 	deque<int> copyMove;
 	uint8_t* dataArrayCopyMove;
 };
 
+// Lucy:"I believe it is also smart to use varialbes to manager size of window. If you need to change size of the window, it is very convenient. My hard code is really hard for changing."
 //Width and height of the screen
 static const int AppWidth = 512;
 static const int AppHeight = 512;
@@ -72,6 +74,8 @@ void CatPictureApp::prepareSettings(Settings* settings) {
 	 *
 	 * This satisfies the "rectangle" requirement, goal A.1
 	 */
+
+// Lucy:"I really love the idea that setting background color and then draw something on it."
 void CatPictureApp::rectangle(uint8_t* dataArray, int row, int col, int width, int height) {
 	Color8u color = Color8u(255,0,255);
 	for (int x=col; x<=col+width; x++) { //col+width   *HOLLOW (To fill use <=)
@@ -90,6 +94,7 @@ void CatPictureApp::rectangle(uint8_t* dataArray, int row, int col, int width, i
 	 *
 	 * This satisfies the "line" requirement, goal A.3
 	 */
+// Lucy: "Here is my suggestion: If you only assign color in this method, you may not be able to change color of this line easily when you need. So probably passing a paremeter called 'Color8u color' as usual is a better way?"
 void CatPictureApp::horizontalLine(uint8_t* dataArray, int row, int col, int width) {
 	Color8u color = Color8u(255,0,255);
 	for (int x=col; x<=col+width; x++) {
@@ -111,6 +116,7 @@ void CatPictureApp::horizontalLine(uint8_t* dataArray, int row, int col, int wid
 	 * 
 	 */
 //Fix Bugs... 45 degrees work...
+// Lucy: "Do you really need this method in your program? This time I could not see the mountain you would like to draw."
 void CatPictureApp::line(uint8_t* dataArray, float row1, float col1, float row2, float col2, Color8u color) {
 	float rise = row2-row1;
 	float run = col2-col1;
@@ -159,6 +165,7 @@ void CatPictureApp::line(uint8_t* dataArray, float row1, float col1, float row2,
 	 *
 	 * This satisfies the "Tint" requirement, goal A.6
 	 */
+	// Lucy:"I always love 'tint' method! That is really intersting!"
 	void CatPictureApp::tint(uint8_t* dataArray, int row, int col) {
 			for(int y=0; y<=512; y++){
 		for(int x=0;x<=512; x++){
@@ -177,6 +184,7 @@ void CatPictureApp::line(uint8_t* dataArray, float row1, float col1, float row2,
 	 *
 	 * This satisfies the "blur" requirement, goal B.1
 	 */
+	// Lucy: "It is probably not a good way to use hard code to represent width and height of window. If you need to change them, then...thousands of changes. Probably using variables is a better way."
 	void CatPictureApp::blur(uint8_t* dataArray) {
 		int j=0;
 		uint8_t* dataArrayCopy = new uint8_t [512*512*3];
@@ -268,6 +276,7 @@ void CatPictureApp::line(uint8_t* dataArray, float row1, float col1, float row2,
 	void CatPictureApp::circle(uint8_t* dataArray,float midx, float midy, float radius, Color8u color) {
 		for(int y=0; y<=512; y++){
 		for(int x=0;x<=512; x++){
+			// Lucy: "if y=0 and y++ and x=0 and x++ then x and y will never be negative. So this line probably will never work?"
 			if(y < 0 || x < 0) continue;
 
 			//If correct distance away from mid points
@@ -373,6 +382,7 @@ void CatPictureApp::setup()
 	 *
 	 * This satisfies the "Mouse Interaction" requirement, goal E.6
 	 */
+// Lucy: "I like this way because now we can tint on space with color. In my solution I do not need this one but in your program it is very crucial."
 void CatPictureApp::mouseDown( MouseEvent event )
 {
 	tints.push_back((int)event.getX());
@@ -415,6 +425,7 @@ void CatPictureApp::update()
 	*
 	**/
 	//It's gon rain!
+	// Lucy: "I love this creative idea!!! But does it represent rain or cloud?"
 	if (frame_count<30) {
 	circle(dataArray, 10+frame_count*2,10+frame_count*3,10+frame_count,Color(cos(0.5f),cos(0.5f),cos(0.5f)));
 	circle(dataArray, 20+frame_count*2,10+frame_count*3,10+frame_count,Color(cos(0.5f),cos(0.5f),cos(0.5f)));
@@ -445,6 +456,7 @@ void CatPictureApp::update()
 	//Uses deque to determine if mouse has been clicked
 		while (tints.size() > 0) {
 
+			//Lucy: "I should check this part really careful for learning because I still do not understand how to do it. Thank you!"
 
 			// initialize random seed:
 			//srand ( time(NULL) );
